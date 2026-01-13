@@ -15,8 +15,10 @@ import Leaderboard from "@/pages/user/Leaderboard";
 import ReferFriend from "@/pages/user/ReferFriend";
 import Wallet from "@/pages/user/Wallet";
 
-import AdminLayout from "@/components/AdminLayout";
+import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "@/pages/admin/Dashboard";
+import VerifyVoucher from "@/pages/admin/VerifyVoucher";
+import RewardsManager from "@/pages/admin/RewardsManager";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import NotFound from "@/pages/NotFound";
@@ -48,8 +50,10 @@ const AppRoutes = () => {
         <Route element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="members" element={<AdminDashboard />} />
-          <Route path="rewards" element={<div className="p-8">Rewards Management - Coming Soon</div>} />
-          <Route path="analytics" element={<div className="p-8">Analytics Dashboard - Coming Soon</div>} />
+          <Route path="verify" element={<VerifyVoucher />} />
+          <Route path="rewards" element={<RewardsManager />} />
+          <Route path="promos" element={<div className="p-8 text-center text-brand-silver">Promo Management - Coming Soon</div>} />
+          <Route path="analytics" element={<div className="p-8 text-center text-brand-silver">Analytics - Coming Soon</div>} />
         </Route>
       </Route>
 
