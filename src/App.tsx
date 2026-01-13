@@ -13,6 +13,7 @@ import Rewards from "@/pages/user/Rewards";
 import Profile from "@/pages/user/Profile";
 import Leaderboard from "@/pages/user/Leaderboard";
 import ReferFriend from "@/pages/user/ReferFriend";
+import Wallet from "@/pages/user/Wallet";
 
 import AdminDashboard from "@/pages/admin/Dashboard";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
@@ -37,6 +38,7 @@ const AppRoutes = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/refer" element={<ReferFriend />} />
+          <Route path="/wallet" element={<Wallet />} />
         </Route>
       </Route>
 
