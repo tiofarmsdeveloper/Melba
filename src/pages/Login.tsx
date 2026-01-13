@@ -26,7 +26,9 @@ const Login = () => {
           </div>
         </div>
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-medium text-brand-white">Welcome to Melba</h1>
+          <h1 className="text-2xl font-medium text-brand-white">
+            Welcome to <span className="font-cursive">Melba</span>
+          </h1>
           <p className="text-xs text-brand-silver tracking-widest font-light mt-1">INVITE-ONLY MEMBERSHIP PROGRAMME</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">

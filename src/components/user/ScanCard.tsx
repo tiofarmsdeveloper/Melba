@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { QrCode, ChevronRight } from 'lucide-react';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG as QRCode } from 'qrcode.react';
 
 interface ScanCardProps {
   identifier: string;
