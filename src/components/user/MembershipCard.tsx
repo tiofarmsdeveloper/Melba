@@ -12,7 +12,7 @@ const MembershipCard: React.FC<MembershipCardProps> = ({ user }) => {
         <div className="flex justify-between items-start">
           <div>
             <p className="text-xs text-brand-silver font-light">Member</p>
-            <p className="text-lg font-medium tracking-wider">{user.name}</p>
+            <p className="text-lg font-medium tracking-wider">{user.leaderboardUsername}</p>
           </div>
           <p className="font-cursive text-2xl text-brand-white">Melba</p>
         </div>

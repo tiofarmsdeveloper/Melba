@@ -8,6 +8,7 @@ interface AuthContextType {
   logout: () => void;
   addCredits: (amount: number) => void;
   redeemReward: (cost: number, description: string) => boolean;
+  updateUsername: (newNickname: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -69,8 +70,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return false;
   };
 
+  const updateUsername = (newNickname: string) => {
+    if (user) {
+      const updatedUser = { ...user, leaderboardUsername: newNickname };
+      setUser(updatedUser);
+      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, addCredits, redeemReward }}>
+    <AuthContext.Provider value={{ user, login, logout, addCredits, redeemReward, updateUsername }}>
       {children}
     </AuthContext.Provider>
   );
