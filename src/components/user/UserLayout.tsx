@@ -5,7 +5,7 @@ import BottomNav from './BottomNav';
 const UserLayout = () => {
   return (
     <div className="flex flex-col h-full w-full max-w-md mx-auto bg-brand-charcoal">
-      <main className="flex-grow p-4 overflow-y-auto">
+      <main className="flex-grow p-4 overflow-y-auto pb-24">
         <Outlet />
       </main>
       <BottomNav />

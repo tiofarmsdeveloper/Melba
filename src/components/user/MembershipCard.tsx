@@ -7,7 +7,7 @@ interface MembershipCardProps {
 
 const MembershipCard: React.FC<MembershipCardProps> = ({ user }) => {
   return (
-    <div className="bg-brand-charcoal rounded-2xl p-6 shadow-neumorphic-out text-brand-white">
+    <div className="bg-brand-charcoal rounded-2xl p-5 shadow-neumorphic-out text-brand-white">
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm text-brand-silver font-light">Member</p>
@@ -15,7 +15,7 @@ const MembershipCard: React.FC<MembershipCardProps> = ({ user }) => {
         </div>
         <p className="font-cursive text-4xl text-brand-white">Melba</p>
       </div>
-      <div className="mt-8 text-right">
+      <div className="mt-6 text-right">
         <p className="text-sm text-brand-silver font-light">Melba Credits</p>
         <p className="text-3xl font-bold tracking-tighter">{user.credits.toLocaleString()}</p>
       </div>

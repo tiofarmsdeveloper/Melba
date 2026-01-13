@@ -11,11 +11,11 @@ const navItems = [
 ];
 
 const BottomNav = () => {
-  const baseClasses = "flex flex-col items-center justify-center w-full h-full text-brand-silver transition-colors duration-300";
-  const activeClasses = "text-brand-white";
+  const baseClasses = "flex flex-col items-center justify-center w-full h-full text-brand-silver transition-all duration-300";
+  const activeClasses = "text-brand-white scale-110";
 
   return (
-    <nav className="sticky bottom-0 left-0 right-0 h-20 bg-brand-charcoal shadow-neumorphic-out">
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-xs h-16 bg-brand-charcoal/80 backdrop-blur-sm rounded-full shadow-neumorphic-out z-50">
       <div className="flex justify-around h-full">
         {navItems.map((item) => (
           <NavLink
@@ -24,8 +24,8 @@ const BottomNav = () => {
             className={({ isActive }) => cn(baseClasses, isActive && activeClasses)}
             end={item.to === '/'}
           >
-            <item.icon className="w-6 h-6 mb-1" />
-            <span className="text-xs font-light">{item.label}</span>
+            <item.icon className="w-5 h-5 mb-1" />
+            <span className="text-[10px] font-light">{item.label}</span>
           </NavLink>
         ))}
       </div>

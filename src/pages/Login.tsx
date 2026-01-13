@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { showError } from '@/utils/toast';
 
 const Login = () => {
@@ -18,30 +19,47 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-brand-charcoal p-4">
-      <div className="w-full max-w-xs text-center">
-        <h1 className="font-cursive text-7xl text-brand-white mb-8">Melba</h1>
+      <div className="w-full max-w-sm bg-brand-charcoal rounded-2xl p-8 shadow-neumorphic-out">
+        <div className="flex justify-center mb-6">
+          <div className="w-12 h-12 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out">
+            <span className="font-sans text-2xl font-bold text-brand-white">M</span>
+          </div>
+        </div>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-medium text-brand-white">Welcome to Melba</h1>
+          <p className="text-sm text-brand-silver tracking-widest font-light mt-1">EXCLUSIVE MEMBERS LOUNGE</p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="username" className="text-xs text-brand-silver font-light tracking-wider">USERNAME</Label>
+            <Input
+              id="username"
+              type="text"
+              placeholder="Enter your access ID"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password"  className="text-xs text-brand-silver font-light tracking-wider">PASSWORD</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter your secure key"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
+            />
+          </div>
           <Button
             type="submit"
             className="w-full bg-brand-charcoal text-brand-white font-semibold py-3 rounded-xl shadow-neumorphic-out active:shadow-neumorphic-out-pressed transition-all duration-200 hover:bg-brand-charcoal"
           >
-            Enter the Lounge
+            ENTER THE LOUNGE
           </Button>
         </form>
+        <p className="text-center text-xs text-brand-silver/50 mt-8">By entering, you agree to the House Rules.</p>
       </div>
     </div>
   );
