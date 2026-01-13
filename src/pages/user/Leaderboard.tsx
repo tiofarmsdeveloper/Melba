@@ -9,17 +9,17 @@ const Leaderboard = () => {
 
   return (
     <div className="text-brand-white">
-      <h1 className="text-3xl font-semibold mb-6">Leaderboard</h1>
+      <h1 className="text-2xl font-semibold mb-6">Leaderboard</h1>
       <div className="space-y-3">
         {sortedUsers.map((user, index) => (
           <div key={user.id} className="flex items-center p-3 bg-brand-charcoal rounded-lg shadow-neumorphic-out">
-            <div className="w-10 text-center font-bold text-xl mr-3">
+            <div className="w-10 text-center font-bold text-lg mr-3">
               {index === 0 ? <Crown className="w-6 h-6 text-yellow-400 mx-auto" /> : index + 1}
             </div>
             <img src={user.avatar} alt={user.leaderboardUsername} className="w-12 h-12 rounded-full mr-4" />
             <div className="flex-grow">
-              <p className="font-semibold text-brand-white">{user.leaderboardUsername}</p>
-              <p className="text-sm text-brand-silver">{user.credits.toLocaleString()} Credits</p>
+              <p className="font-medium text-sm text-brand-white">{user.leaderboardUsername}</p>
+              <p className="text-xs text-brand-silver">{user.credits.toLocaleString()} Credits</p>
             </div>
           </div>
         ))}

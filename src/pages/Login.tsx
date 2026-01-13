@@ -21,13 +21,13 @@ const Login = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-brand-charcoal p-4">
       <div className="w-full max-w-sm bg-brand-charcoal rounded-2xl p-8 shadow-neumorphic-out">
         <div className="flex justify-center mb-6">
-          <div className="w-12 h-12 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out">
-            <span className="font-sans text-2xl font-bold text-brand-white">M</span>
+          <div className="w-10 h-10 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out">
+            <span className="font-sans text-xl font-bold text-brand-white">M</span>
           </div>
         </div>
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-medium text-brand-white">Welcome to Melba</h1>
-          <p className="text-sm text-brand-silver tracking-widest font-light mt-1">EXCLUSIVE MEMBERS LOUNGE</p>
+          <h1 className="text-2xl font-medium text-brand-white">Welcome to Melba</h1>
+          <p className="text-xs text-brand-silver tracking-widest font-light mt-1">EXCLUSIVE MEMBERS LOUNGE</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
