@@ -22,21 +22,30 @@ const ScanCard: React.FC<ScanCardProps> = ({ identifier }) => {
           <ChevronRight className="w-5 h-5 text-brand-silver/50" />
         </button>
       </DialogTrigger>
-      <DialogContent className="bg-brand-charcoal border-brand-silver/20 text-brand-white max-w-xs rounded-2xl">
-        <div className="flex flex-col items-center text-center py-8">
-          <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
-            <QrCode className="w-7 h-7 text-white" />
+      <DialogContent className="bg-brand-charcoal/90 backdrop-blur-xl border-brand-silver/10 text-brand-white max-w-[320px] rounded-3xl p-0 overflow-hidden shadow-2xl">
+        <div className="flex flex-col items-center text-center py-10 px-6">
+          <div className="w-16 h-16 bg-brand-charcoal rounded-2xl flex items-center justify-center mb-6 shadow-neumorphic-out border border-brand-silver/5">
+            <QrCode className="w-8 h-8 text-brand-silver" />
           </div>
-          <h2 className="text-xl font-semibold">Scan Card</h2>
-          <p className="text-sm text-brand-silver mt-1 mb-6">
+          
+          <h2 className="text-xl font-medium tracking-tight mb-2">Scan Card</h2>
+          <p className="text-xs text-brand-silver font-light mb-8 max-w-[200px] leading-relaxed">
             Show this QR code to staff to collect your reward
           </p>
-          <div className="bg-white p-4 rounded-lg">
-            <QRCode value={identifier} size={192} fgColor="#232323" />
+          
+          <div className="bg-white p-5 rounded-2xl shadow-neumorphic-in mb-8">
+            <QRCode 
+              value={identifier} 
+              size={180} 
+              fgColor="#232323" 
+              bgColor="#FFFFFF"
+              level="M"
+            />
           </div>
-          <div className="mt-6">
-            <p className="text-xs text-brand-silver font-light tracking-wider">IDENTIFIER</p>
-            <p className="text-lg font-semibold tracking-widest mt-1">{identifier}</p>
+          
+          <div className="w-full pt-6 border-t border-brand-silver/5">
+            <p className="text-[10px] text-brand-silver font-light tracking-[0.2em] uppercase mb-1">Identifier</p>
+            <p className="text-sm font-medium tracking-[0.1em] text-brand-white/90">{identifier}</p>
           </div>
         </div>
       </DialogContent>
