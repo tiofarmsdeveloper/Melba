@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import MembershipCard from '../../components/user/MembershipCard';
+import TransactionHistory from '../../components/user/TransactionHistory';
 import QuickActions from '../../components/user/QuickActions';
 
 const Dashboard = () => {
@@ -17,6 +18,7 @@ const Dashboard = () => {
         <h2 className="text-2xl font-semibold text-brand-white">{user.name.split(' ')[0]}</h2>
       </div>
       <MembershipCard user={user} />
+      <TransactionHistory transactions={user.transactions || []} />
       <QuickActions />
     </div>
   );

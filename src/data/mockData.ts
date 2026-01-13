@@ -1,3 +1,10 @@
+export interface Transaction {
+  id: number;
+  description: string;
+  date: string;
+  amount: number; // positive for earned, negative for spent
+}
+
 export interface User {
   id: number;
   username: string;
@@ -8,6 +15,7 @@ export interface User {
   credits: number;
   leaderboardUsername: string;
   avatar: string;
+  transactions: Transaction[];
 }
 
 export let users: User[] = [
@@ -21,6 +29,14 @@ export let users: User[] = [
     credits: 1250,
     leaderboardUsername: 'Pizza Connoisseur',
     avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Alex',
+    transactions: [
+      { id: 1, description: 'Dinner at Melba', date: '2024-07-20', amount: -150 },
+      { id: 2, description: 'Promo Code: MELBA100', date: '2024-07-18', amount: 100 },
+      { id: 3, description: 'Referral Bonus', date: '2024-07-15', amount: 50 },
+      { id: 4, description: 'Lunch Special', date: '2024-07-12', amount: -75 },
+      { id: 5, description: 'Welcome Credits', date: '2024-07-10', amount: 25 },
+      { id: 6, description: 'Late Night Pizza', date: '2024-07-05', amount: -90 },
+    ],
   },
   {
     id: 2,
@@ -32,6 +48,7 @@ export let users: User[] = [
     credits: 9999,
     leaderboardUsername: 'The Don',
     avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Admin',
+    transactions: [],
   },
   {
     id: 3,
@@ -43,6 +60,9 @@ export let users: User[] = [
     credits: 200,
     leaderboardUsername: 'Crust Crusader',
     avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Sam',
+    transactions: [
+      { id: 1, description: 'Welcome Credits', date: '2024-07-19', amount: 200 },
+    ],
   },
   {
     id: 4,
@@ -54,6 +74,10 @@ export let users: User[] = [
     credits: 2100,
     leaderboardUsername: 'Ginger Ale Guru',
     avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Jane',
+    transactions: [
+      { id: 1, description: 'Dinner Party', date: '2024-07-21', amount: -450 },
+      { id: 2, description: 'Tier Upgrade Bonus', date: '2024-07-20', amount: 500 },
+    ],
   },
   {
     id: 5,
@@ -65,6 +89,10 @@ export let users: User[] = [
     credits: 5400,
     leaderboardUsername: 'Mocktail Maestro',
     avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Mike',
+    transactions: [
+      { id: 1, description: 'Chef\'s Table Experience', date: '2024-07-22', amount: -1000 },
+      { id: 2, description: 'Loyalty Anniversary', date: '2024-07-15', amount: 1000 },
+    ],
   },
 ];
 
