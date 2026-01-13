@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Star, Award, User as UserIcon } from 'lucide-react';
+import { Home, Star, Award, User as UserIcon, Trophy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
   { to: '/tiers', icon: Star, label: 'Tiers' },
   { to: '/rewards', icon: Award, label: 'Rewards' },
+  { to: '/leaderboard', icon: Trophy, label: 'Ranks' },
   { to: '/profile', icon: UserIcon, label: 'Profile' },
 ];
 
@@ -15,7 +16,7 @@ const BottomNav = () => {
   const activeClasses = "text-brand-white scale-110";
 
   return (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-xs h-16 bg-brand-charcoal/80 backdrop-blur-sm rounded-full shadow-neumorphic-out z-50">
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md h-16 bg-brand-charcoal/80 backdrop-blur-sm rounded-full shadow-neumorphic-out z-50">
       <div className="flex justify-around h-full">
         {navItems.map((item) => (
           <NavLink

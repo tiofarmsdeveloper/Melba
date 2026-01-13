@@ -1,17 +1,19 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { users, User } from '@/data/mockData';
+import { users as initialUsers, User } from '@/data/mockData';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   user: User | null;
   login: (username: string, password: string) => boolean;
   logout: () => void;
+  addCredits: (amount: number) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>(initialUsers);
   const navigate = useNavigate();
 
   const login = (username: string, password: string): boolean => {
@@ -36,8 +38,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     navigate('/login');
   };
 
+  const addCredits = (amount: number) => {
+    if (user) {
+      const updatedUser = { ...user, credits: user.credits + amount };
+      setUser(updatedUser);
+      
+      // Also update the main users array for leaderboard persistence
+      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, addCredits }}>
       {children}
     </AuthContext.Provider>
   );

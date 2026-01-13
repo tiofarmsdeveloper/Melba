@@ -11,6 +11,8 @@ import UserDashboard from "@/pages/user/Dashboard";
 import Tiers from "@/pages/user/Tiers";
 import Rewards from "@/pages/user/Rewards";
 import Profile from "@/pages/user/Profile";
+import Leaderboard from "@/pages/user/Leaderboard";
+import ReferFriend from "@/pages/user/ReferFriend";
 
 import AdminDashboard from "@/pages/admin/Dashboard";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
@@ -33,6 +35,8 @@ const AppRoutes = () => {
           <Route path="/tiers" element={<Tiers />} />
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/refer" element={<ReferFriend />} />
         </Route>
       </Route>
 

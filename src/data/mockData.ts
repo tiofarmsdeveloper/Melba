@@ -6,9 +6,11 @@ export interface User {
   name: string;
   tier: 'Member' | 'Privé' | 'Black Circle';
   credits: number;
+  leaderboardUsername: string;
+  avatar: string;
 }
 
-export const users: User[] = [
+export let users: User[] = [
   {
     id: 1,
     username: 'user',
@@ -17,6 +19,8 @@ export const users: User[] = [
     name: 'Alex Doe',
     tier: 'Privé',
     credits: 1250,
+    leaderboardUsername: 'Pizza Connoisseur',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Alex',
   },
   {
     id: 2,
@@ -26,6 +30,8 @@ export const users: User[] = [
     name: 'Admin',
     tier: 'Black Circle',
     credits: 9999,
+    leaderboardUsername: 'The Don',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Admin',
   },
   {
     id: 3,
@@ -35,6 +41,30 @@ export const users: User[] = [
     name: 'Sam Smith',
     tier: 'Member',
     credits: 200,
+    leaderboardUsername: 'Crust Crusader',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Sam',
+  },
+  {
+    id: 4,
+    username: 'jane',
+    password: 'password',
+    role: 'user',
+    name: 'Jane Roe',
+    tier: 'Privé',
+    credits: 2100,
+    leaderboardUsername: 'Ginger Ale Guru',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Jane',
+  },
+  {
+    id: 5,
+    username: 'mike',
+    password: 'password',
+    role: 'user',
+    name: 'Mike Milligan',
+    tier: 'Black Circle',
+    credits: 5400,
+    leaderboardUsername: 'Mocktail Maestro',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Mike',
   },
 ];
 
@@ -83,4 +113,9 @@ export const rewards = [
     description: 'Enjoy a tableside preparation of one of our signature mocktails.',
     image: '/placeholder.svg',
   },
+];
+
+export const promoCodes = [
+  { code: 'MELBA100', credits: 100, used: false },
+  { code: 'PIZZA50', credits: 50, used: false },
 ];
