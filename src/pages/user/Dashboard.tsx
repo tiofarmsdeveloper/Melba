@@ -1,15 +1,21 @@
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Button } from '@/components/ui/button';
+import MembershipCard from '../../components/user/MembershipCard';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+
+  if (!user) {
+    return null; // Or a loading spinner
+  }
 
   return (
-    <div className="p-4 text-brand-white">
-      <h1 className="text-2xl">Welcome, {user?.name}</h1>
-      <p>This is the user dashboard.</p>
-      <Button onClick={logout} className="mt-4">Logout</Button>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-light text-brand-white">Welcome back,</h1>
+        <h2 className="text-4xl font-semibold text-brand-white">{user.name.split(' ')[0]}</h2>
+      </div>
+      <MembershipCard user={user} />
     </div>
   );
 };

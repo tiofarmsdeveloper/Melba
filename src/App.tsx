@@ -6,7 +6,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 import Login from "@/pages/Login";
+import UserLayout from "./components/user/UserLayout";
 import UserDashboard from "@/pages/user/Dashboard";
+import Tiers from "@/pages/user/Tiers";
+import Rewards from "@/pages/user/Rewards";
+import Profile from "@/pages/user/Profile";
+
 import AdminDashboard from "@/pages/admin/Dashboard";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
@@ -23,17 +28,20 @@ const AppRoutes = () => {
       
       {/* User Routes */}
       <Route element={<UserProtectedRoute />}>
-        <Route path="/" element={<UserDashboard />} />
-        {/* Add other user routes here */}
+        <Route element={<UserLayout />}>
+          <Route path="/" element={<UserDashboard />} />
+          <Route path="/tiers" element={<Tiers />} />
+          <Route path="/rewards" element={<Rewards />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Route>
 
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminProtectedRoute />}>
         <Route index element={<AdminDashboard />} />
-        {/* Add other admin routes here */}
       </Route>
 
-      <Route path="*" element={user ? <NotFound /> : <Navigate to="/login" />} />
+      <Route path="*" element={user ? <Navigate to="/" /> : <Navigate to="/login" />} />
     </Routes>
   );
 };
