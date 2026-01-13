@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import MembershipCard from '../../components/user/MembershipCard';
+import ScanCard from '../../components/user/ScanCard';
 import TransactionHistory from '../../components/user/TransactionHistory';
 import QuickActions from '../../components/user/QuickActions';
 
@@ -18,6 +19,7 @@ const Dashboard = () => {
         <h2 className="text-xl font-semibold text-brand-white">{user.name.split(' ')[0]}</h2>
       </div>
       <MembershipCard user={user} />
+      <ScanCard identifier={user.identifier} />
       <TransactionHistory transactions={user.transactions || []} />
       <QuickActions />
     </div>
