@@ -15,6 +15,7 @@ import Leaderboard from "@/pages/user/Leaderboard";
 import ReferFriend from "@/pages/user/ReferFriend";
 import Wallet from "@/pages/user/Wallet";
 
+import AdminLayout from "@/components/AdminLayout";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
@@ -44,7 +45,12 @@ const AppRoutes = () => {
 
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminProtectedRoute />}>
-        <Route index element={<AdminDashboard />} />
+        <Route element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="members" element={<AdminDashboard />} />
+          <Route path="rewards" element={<div className="p-8">Rewards Management - Coming Soon</div>} />
+          <Route path="analytics" element={<div className="p-8">Analytics Dashboard - Coming Soon</div>} />
+        </Route>
       </Route>
 
       <Route path="*" element={user ? <Navigate to="/" /> : <Navigate to="/login" />} />

@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   user: User | null;
+  users: User[];
   login: (username: string, password: string) => boolean;
   logout: () => void;
   addCredits: (amount: number) => void;
+  adminAddCredits: (userId: number, amount: number, reason: string) => void;
   redeemReward: (cost: number, description: string) => boolean;
   updateUsername: (newNickname: string) => void;
   useVoucher: (voucherId: string) => void;
@@ -24,9 +26,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       (u) => u.username === username && u.password === password
     );
     if (foundUser) {
-      const { password, ...userToStore } = foundUser;
+      const { password: _, ...userToStore } = foundUser;
       setUser(userToStore as User);
-      if (userToStore.role === 'admin') {
+      if (foundUser.role === 'admin') {
         navigate('/admin');
       } else {
         navigate('/');
@@ -43,10 +45,46 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const addCredits = (amount: number) => {
     if (user) {
-      const updatedUser = { ...user, credits: user.credits + amount };
+      const newTransaction = {
+        id: Math.random(),
+        description: amount > 0 ? 'Credits Added' : 'Credits Removed',
+        date: new Date().toISOString().split('T')[0],
+        amount: amount
+      };
+
+      const updatedUser = { 
+        ...user, 
+        credits: user.credits + amount,
+        transactions: [newTransaction, ...(user.transactions || [])]
+      };
+      
       setUser(updatedUser);
       setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
     }
+  };
+
+  const adminAddCredits = (userId: number, amount: number, reason: string) => {
+    setUsers(prevUsers => prevUsers.map(u => {
+      if (u.id === userId) {
+        const newTransaction = {
+          id: Math.random(),
+          description: reason,
+          date: new Date().toISOString().split('T')[0],
+          amount: amount
+        };
+        const updated = {
+          ...u,
+          credits: u.credits + amount,
+          transactions: [newTransaction, ...(u.transactions || [])]
+        };
+        // If the current logged in user is the one being updated, update the session user too
+        if (user?.id === userId) {
+          setUser(updated);
+        }
+        return updated;
+      }
+      return u;
+    }));
   };
 
   const redeemReward = (cost: number, description: string): boolean => {
@@ -101,7 +139,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, addCredits, redeemReward, updateUsername, useVoucher }}>
+    <AuthContext.Provider value={{ user, users, login, logout, addCredits, adminAddCredits, redeemReward, updateUsername, useVoucher }}>
       {children}
     </AuthContext.Provider>
   );
