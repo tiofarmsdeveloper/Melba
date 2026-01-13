@@ -33,12 +33,12 @@ const ScanCard: React.FC<ScanCardProps> = ({ identifier }) => {
             Show this QR code to staff to collect your reward
           </p>
           
-          <div className="bg-white p-5 rounded-2xl shadow-neumorphic-in mb-8">
+          <div className="p-6 rounded-2xl shadow-neumorphic-in mb-8 bg-brand-charcoal">
             <QRCode 
               value={identifier} 
               size={180} 
-              fgColor="#232323" 
-              bgColor="#FFFFFF"
+              fgColor="#f0f0f0" 
+              bgColor="transparent"
               level="M"
             />
           </div>
