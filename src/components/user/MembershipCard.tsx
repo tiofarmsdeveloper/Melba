@@ -11,17 +11,17 @@ const MembershipCard: React.FC<MembershipCardProps> = ({ user }) => {
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm text-brand-silver font-light">Member</p>
-          <p className="text-2xl font-medium tracking-wider">{user.name}</p>
+          <p className="text-xl font-medium tracking-wider">{user.name}</p>
         </div>
-        <p className="font-cursive text-4xl text-brand-white">Melba</p>
+        <p className="font-cursive text-3xl text-brand-white">Melba</p>
       </div>
-      <div className="mt-6 text-right">
+      <div className="mt-4 text-right">
         <p className="text-sm text-brand-silver font-light">Melba Credits</p>
-        <p className="text-3xl font-bold tracking-tighter">{user.credits.toLocaleString()}</p>
+        <p className="text-2xl font-bold tracking-tighter">{user.credits.toLocaleString()}</p>
       </div>
-      <div className="mt-4 text-left">
+      <div className="mt-3 text-left">
         <p className="text-sm text-brand-silver font-light">Tier</p>
-        <p className="text-2xl font-cursive">{user.tier}</p>
+        <p className="text-xl font-cursive">{user.tier}</p>
       </div>
     </div>
   );
