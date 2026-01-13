@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import MembershipCard from '../../components/user/MembershipCard';
-import ScanCard from '../../components/user/ScanCard';
-import TransactionHistory from '../../components/user/TransactionHistory';
-import QuickActions from '../../components/user/QuickActions';
-import WelcomeCarousel from '../../components/user/WelcomeCarousel';
-import TierProgress from '../../components/user/TierProgress';
-import FeaturedRewards from '../../components/user/FeaturedRewards';
+import MembershipCard from '@/components/user/MembershipCard';
+import ScanCard from '@/components/user/ScanCard';
+import TransactionHistory from '@/components/user/TransactionHistory';
+import QuickActions from '@/components/user/QuickActions';
+import WelcomeCarousel from '@/components/user/WelcomeCarousel';
+import TierProgress from '@/components/user/TierProgress';
+import FeaturedRewards from '@/components/user/FeaturedRewards';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -33,8 +33,8 @@ const Dashboard = () => {
     <>
       {showSplash && <WelcomeCarousel onComplete={handleSplashComplete} />}
       
-      <div className={`space-y-8 transition-opacity duration-1000 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="flex justify-between items-end">
+      <div className={`space-y-8 pb-10 transition-opacity duration-1000 ${showSplash ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+        <div className="flex justify-between items-end px-1">
           <div>
             <h1 className="text-lg font-light text-brand-white">Welcome back,</h1>
             <h2 className="text-xl font-semibold text-brand-white">{user.name.split(' ')[0]}</h2>
