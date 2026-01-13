@@ -6,7 +6,10 @@ import {
   TrendingUp, 
   Search, 
   Plus, 
-  ExternalLink
+  ExternalLink,
+  History,
+  ArrowUpRight,
+  ArrowDownLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,6 +28,7 @@ const AdminDashboard = () => {
   const { users, adminAddCredits } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [auditUserId, setAuditUserId] = useState<number | null>(null);
   const [amount, setAmount] = useState('100');
   const [reason, setReason] = useState('Visit Reward');
 
@@ -43,8 +47,10 @@ const AdminDashboard = () => {
     setSelectedUserId(null);
   };
 
+  const auditUser = users.find(u => u.id === auditUserId);
+
   return (
-    <div className="space-y-8 animate-in fade-in duration-700 pb-10">
+    <div className="space-y-8 animate-in fade-in duration-700 pb-20">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
@@ -86,8 +92,8 @@ const AdminDashboard = () => {
               <div className="w-10 h-10 rounded-full bg-brand-charcoal shadow-neumorphic-in p-1 border border-brand-white/5 overflow-hidden">
                 <img src={u.avatar} alt="" className="w-full h-full object-cover rounded-full" />
               </div>
-              <div>
-                <p className="text-sm font-semibold">{u.name}</p>
+              <div onClick={() => setAuditUserId(u.id)} className="cursor-pointer group">
+                <p className="text-sm font-semibold group-hover:text-brand-silver transition-colors">{u.name}</p>
                 <div className="flex items-center gap-2">
                    <span className="text-[9px] text-brand-silver uppercase tracking-tighter">{u.tier}</span>
                    <span className="w-1 h-1 bg-brand-silver/30 rounded-full" />
@@ -97,6 +103,13 @@ const AdminDashboard = () => {
             </div>
             
             <div className="flex gap-2">
+              <Button 
+                onClick={() => setAuditUserId(u.id)}
+                variant="ghost"
+                className="w-9 h-9 p-0 rounded-xl shadow-neumorphic-out text-brand-silver"
+              >
+                <History className="w-4 h-4" />
+              </Button>
               <Button 
                 onClick={() => setSelectedUserId(u.id)}
                 className="w-9 h-9 p-0 rounded-xl bg-brand-charcoal shadow-neumorphic-out active:shadow-neumorphic-in text-brand-silver border-none"
@@ -108,6 +121,7 @@ const AdminDashboard = () => {
         ))}
       </div>
 
+      {/* Adjustment Dialog */}
       <Dialog open={selectedUserId !== null} onOpenChange={(open) => !open && setSelectedUserId(null)}>
         <DialogContent className="bg-brand-charcoal border-brand-white/10 text-brand-white rounded-3xl mx-4 max-w-[calc(100%-2rem)]">
           <DialogHeader>
@@ -123,6 +137,66 @@ const AdminDashboard = () => {
               Update Balance
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Audit/History Dialog */}
+      <Dialog open={auditUserId !== null} onOpenChange={(open) => !open && setAuditUserId(null)}>
+        <DialogContent className="bg-brand-charcoal border-brand-white/10 text-brand-white rounded-3xl mx-4 max-w-[calc(100%-2rem)] h-[80vh] flex flex-col p-0 overflow-hidden">
+          <div className="p-6 pb-2">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full overflow-hidden shadow-neumorphic-out border border-brand-white/5">
+                  <img src={auditUser?.avatar} alt="" />
+                </div>
+                {auditUser?.name}
+              </DialogTitle>
+              <DialogDescription className="text-brand-silver text-[10px] uppercase tracking-widest pt-1">
+                Member Audit Log • ID: {auditUser?.identifier}
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <div className="flex-grow overflow-y-auto px-6 py-4 space-y-4">
+             <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="p-3 bg-brand-charcoal rounded-xl shadow-neumorphic-in">
+                  <p className="text-[10px] text-brand-silver uppercase mb-1">Status</p>
+                  <p className="text-xs font-bold">{auditUser?.tier}</p>
+                </div>
+                <div className="p-3 bg-brand-charcoal rounded-xl shadow-neumorphic-in">
+                  <p className="text-[10px] text-brand-silver uppercase mb-1">Balance</p>
+                  <p className="text-xs font-bold">{auditUser?.credits.toLocaleString()} pts</p>
+                </div>
+             </div>
+
+             <h4 className="text-[10px] font-bold text-brand-silver uppercase tracking-widest px-1">Transaction History</h4>
+             <div className="space-y-2 pb-6">
+                {auditUser?.transactions.map((tx, i) => (
+                  <div key={i} className="flex items-center p-3 bg-brand-charcoal rounded-xl shadow-neumorphic-out border border-brand-white/5">
+                    <div className="w-8 h-8 rounded-lg shadow-neumorphic-in flex items-center justify-center mr-3">
+                      {tx.amount > 0 ? (
+                        <ArrowUpRight className="w-3 h-3 text-green-400" />
+                      ) : (
+                        <ArrowDownLeft className="w-3 h-3 text-red-400" />
+                      )}
+                    </div>
+                    <div className="flex-grow">
+                      <p className="text-xs font-medium">{tx.description}</p>
+                      <p className="text-[9px] text-brand-silver">{tx.date}</p>
+                    </div>
+                    <p className={cn("text-xs font-bold", tx.amount > 0 ? "text-green-400" : "text-red-400")}>
+                      {tx.amount > 0 ? '+' : ''}{tx.amount}
+                    </p>
+                  </div>
+                ))}
+             </div>
+          </div>
+          
+          <div className="p-6 bg-brand-charcoal/50 border-t border-brand-white/5">
+             <Button className="w-full bg-brand-silver text-brand-charcoal font-bold py-4 rounded-xl" onClick={() => setAuditUserId(null)}>
+               Close Audit
+             </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

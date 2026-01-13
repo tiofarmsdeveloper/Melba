@@ -19,6 +19,8 @@ import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import VerifyVoucher from "@/pages/admin/VerifyVoucher";
 import RewardsManager from "@/pages/admin/RewardsManager";
+import PromoManager from "@/pages/admin/PromoManager";
+import Analytics from "@/pages/admin/Analytics";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 import NotFound from "@/pages/NotFound";
@@ -52,8 +54,8 @@ const AppRoutes = () => {
           <Route path="members" element={<AdminDashboard />} />
           <Route path="verify" element={<VerifyVoucher />} />
           <Route path="rewards" element={<RewardsManager />} />
-          <Route path="promos" element={<div className="p-8 text-center text-brand-silver">Promo Management - Coming Soon</div>} />
-          <Route path="analytics" element={<div className="p-8 text-center text-brand-silver">Analytics - Coming Soon</div>} />
+          <Route path="promos" element={<PromoManager />} />
+          <Route path="analytics" element={<Analytics />} />
         </Route>
       </Route>
 
