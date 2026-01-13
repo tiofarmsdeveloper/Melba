@@ -11,7 +11,7 @@ export interface User {
   password?: string;
   role: 'user' | 'admin';
   name: string;
-  tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
+  tier: 'Member' | 'Privé' | 'Black Circle';
   credits: number;
   leaderboardUsername: string;
   avatar: string;
@@ -25,10 +25,10 @@ export let users: User[] = [
     password: 'user',
     role: 'user',
     name: 'Alex Doe',
-    tier: 'Silver',
+    tier: 'Privé',
     credits: 1250,
     leaderboardUsername: 'Pizza Connoisseur',
-    avatar: 'https://api.dicebear.com/8.x/fun-emoji/svg?seed=Alex',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Alex',
     transactions: [
       { id: 1, description: 'Dinner at Melba', date: '2024-07-20', amount: -150 },
       { id: 2, description: 'Promo Code: MELBA100', date: '2024-07-18', amount: 100 },
@@ -44,10 +44,10 @@ export let users: User[] = [
     password: 'admin',
     role: 'admin',
     name: 'Admin',
-    tier: 'Platinum',
+    tier: 'Black Circle',
     credits: 9999,
     leaderboardUsername: 'The Don',
-    avatar: 'https://api.dicebear.com/8.x/fun-emoji/svg?seed=Admin',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Admin',
     transactions: [],
   },
   {
@@ -56,10 +56,10 @@ export let users: User[] = [
     password: 'password',
     role: 'user',
     name: 'Sam Smith',
-    tier: 'Bronze',
+    tier: 'Member',
     credits: 200,
     leaderboardUsername: 'Crust Crusader',
-    avatar: 'https://api.dicebear.com/8.x/fun-emoji/svg?seed=Sam',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Sam',
     transactions: [
       { id: 1, description: 'Welcome Credits', date: '2024-07-19', amount: 200 },
     ],
@@ -70,10 +70,10 @@ export let users: User[] = [
     password: 'password',
     role: 'user',
     name: 'Jane Roe',
-    tier: 'Platinum',
-    credits: 5400,
+    tier: 'Privé',
+    credits: 2100,
     leaderboardUsername: 'Ginger Ale Guru',
-    avatar: 'https://api.dicebear.com/8.x/fun-emoji/svg?seed=Jane',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Jane',
     transactions: [
       { id: 1, description: 'Dinner Party', date: '2024-07-21', amount: -450 },
       { id: 2, description: 'Tier Upgrade Bonus', date: '2024-07-20', amount: 500 },
@@ -85,10 +85,10 @@ export let users: User[] = [
     password: 'password',
     role: 'user',
     name: 'Mike Milligan',
-    tier: 'Gold',
-    credits: 2100,
+    tier: 'Black Circle',
+    credits: 5400,
     leaderboardUsername: 'Mocktail Maestro',
-    avatar: 'https://api.dicebear.com/8.x/fun-emoji/svg?seed=Mike',
+    avatar: 'https://api.dicebear.com/8.x/adventurer/svg?seed=Mike',
     transactions: [
       { id: 1, description: 'Chef\'s Table Experience', date: '2024-07-22', amount: -1000 },
       { id: 2, description: 'Loyalty Anniversary', date: '2024-07-15', amount: 1000 },
@@ -97,33 +97,27 @@ export let users: User[] = [
 ];
 
 export const tiers = {
-  Bronze: {
-    name: 'Bronze',
+  Member: {
+    name: 'Member',
     benefits: ['Priority waitlist', 'Early access to public events'],
   },
-  Silver: {
-    name: 'Silver',
+  Privé: {
+    name: 'Privé',
     benefits: [
-      'All Bronze benefits',
+      'Priority reservations',
       'Complimentary welcome mocktail',
       'Seating preference requests',
-    ],
-  },
-  Gold: {
-    name: 'Gold',
-    benefits: [
-      'All Silver benefits',
-      'Priority reservations',
       'Privé-only events',
     ],
   },
-  Platinum: {
-    name: 'Platinum',
+  'Black Circle': {
+    name: 'Black Circle',
     benefits: [
-      'All Gold benefits',
-      'Guaranteed reservations',
+      'Guaranteed reservations (even peak)',
       'Off-menu mocktails',
       'Chef table access',
+      'Concierge-style chat',
+      'Invitation-only tastings',
     ],
   },
 };
