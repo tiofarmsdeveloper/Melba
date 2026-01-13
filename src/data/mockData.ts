@@ -132,20 +132,30 @@ export const rewards = [
   {
     id: 1,
     title: 'Artisanal Pizza Pairing',
-    description: 'A curated selection of our finest wood-fired pizzas paired with non-alcoholic beverages.',
+    description: 'A curated selection of our finest wood-fired pizzas.',
     image: '/placeholder.svg',
+    cost: 500,
   },
   {
     id: 2,
     title: 'Ginger Ale Flight',
-    description: 'Explore a flight of house-made ginger ales, from spicy to sweet.',
+    description: 'Explore a flight of house-made ginger ales.',
     image: '/placeholder.svg',
+    cost: 250,
   },
   {
     id: 3,
-    title: 'Signature Mocktail Experience',
-    description: 'Enjoy a tableside preparation of one of our signature mocktails.',
+    title: 'Signature Mocktail',
+    description: 'Enjoy a tableside preparation of a signature mocktail.',
     image: '/placeholder.svg',
+    cost: 350,
+  },
+  {
+    id: 4,
+    title: 'Dessert Selection',
+    description: 'Your choice of any dessert from our daily menu.',
+    image: '/placeholder.svg',
+    cost: 400,
   },
 ];
 

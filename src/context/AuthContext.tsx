@@ -7,6 +7,7 @@ interface AuthContextType {
   login: (username: string, password: string) => boolean;
   logout: () => void;
   addCredits: (amount: number) => void;
+  redeemReward: (cost: number, description: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,14 +43,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (user) {
       const updatedUser = { ...user, credits: user.credits + amount };
       setUser(updatedUser);
-      
-      // Also update the main users array for leaderboard persistence
       setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
     }
   };
 
+  const redeemReward = (cost: number, description: string): boolean => {
+    if (user && user.credits >= cost) {
+      const newTransaction = {
+        id: Math.random(),
+        description: `Redeemed: ${description}`,
+        date: new Date().toISOString().split('T')[0],
+        amount: -cost
+      };
+
+      const updatedUser = { 
+        ...user, 
+        credits: user.credits - cost,
+        transactions: [newTransaction, ...(user.transactions || [])]
+      };
+      
+      setUser(updatedUser);
+      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+      return true;
+    }
+    return false;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, addCredits }}>
+    <AuthContext.Provider value={{ user, login, logout, addCredits, redeemReward }}>
       {children}
     </AuthContext.Provider>
   );
