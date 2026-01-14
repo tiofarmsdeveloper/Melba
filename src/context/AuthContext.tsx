@@ -12,6 +12,7 @@ interface AuthContextType {
   redeemReward: (cost: number, description: string) => boolean;
   updateUsername: (newNickname: string) => void;
   useVoucher: (voucherId: string) => void;
+  adminUseVoucher: (voucherCode: string) => { success: boolean, message: string };
   markNotificationRead: (id: string) => void;
   sendNotification: (userId: number, notification: Omit<Notification, 'id' | 'read' | 'date'>) => void;
 }
@@ -84,6 +85,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const adminUseVoucher = (voucherCode: string) => {
+    let found = false;
+    let message = "Voucher not found.";
+    
+    const updatedUsers = users.map(u => {
+      const voucherIndex = u.vouchers.findIndex(v => v.code.toLowerCase() === voucherCode.toLowerCase());
+      if (voucherIndex !== -1) {
+        if (u.vouchers[voucherIndex].used) {
+          found = true;
+          message = "Voucher has already been redeemed.";
+          return u;
+        }
+        found = true;
+        message = `Successfully redeemed: ${u.vouchers[voucherIndex].title} for ${u.name}`;
+        const newVouchers = [...u.vouchers];
+        newVouchers[voucherIndex] = { ...newVouchers[voucherIndex], used: true };
+        const updatedUser = { ...u, vouchers: newVouchers };
+        if (user?.id === u.id) setUser(updatedUser);
+        return updatedUser;
+      }
+      return u;
+    });
+
+    if (found && message.startsWith('Successfully')) {
+      setUsers(updatedUsers);
+      return { success: true, message };
+    }
+    return { success: false, message };
+  };
+
   const markNotificationRead = (id: string) => {
     if (user) {
       const updatedUser = { ...user, notifications: user.notifications.map(n => n.id === id ? { ...n, read: true } : n) };
@@ -105,7 +136,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, users, login, logout, addCredits, adminAddCredits, redeemReward, updateUsername, useVoucher, markNotificationRead, sendNotification }}>
+    <AuthContext.Provider value={{ user, users, login, logout, addCredits, adminAddCredits, redeemReward, updateUsername, useVoucher, adminUseVoucher, markNotificationRead, sendNotification }}>
       {children}
     </AuthContext.Provider>
   );

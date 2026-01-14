@@ -6,10 +6,9 @@ import {
   LayoutDashboard, 
   LogOut, 
   Award, 
-  PieChart,
   ChevronLeft,
   Scan,
-  Ticket,
+  ScanLine,
   Settings
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,7 +24,8 @@ const AdminLayout = () => {
   const navItems = [
     { label: 'Stats', icon: LayoutDashboard, path: '/admin' },
     { label: 'Members', icon: Users, path: '/admin/members' },
-    { label: 'Scan', icon: Scan, path: '/admin/scan' },
+    { label: 'Points', icon: Scan, path: '/admin/scan' },
+    { label: 'Redeem', icon: ScanLine, path: '/admin/verify' },
     { label: 'Rewards', icon: Award, path: '/admin/rewards' },
     { label: 'Config', icon: Settings, path: '/admin/config' },
   ];

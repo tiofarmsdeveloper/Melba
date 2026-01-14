@@ -15,6 +15,7 @@ import Leaderboard from "@/pages/user/Leaderboard";
 import ReferFriend from "@/pages/user/ReferFriend";
 import Wallet from "@/pages/user/Wallet";
 import Inbox from "@/pages/user/Inbox";
+import HouseRules from "@/pages/user/HouseRules";
 
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "@/pages/admin/Dashboard";
@@ -44,6 +45,7 @@ const AppRoutes = () => {
           <Route path="/refer" element={<ReferFriend />} />
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/inbox" element={<Inbox />} />
+          <Route path="/rules" element={<HouseRules />} />
         </Route>
       </Route>
       <Route path="/admin" element={<AdminProtectedRoute />}>
