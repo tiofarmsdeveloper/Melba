@@ -23,6 +23,7 @@ import RewardsManager from "@/pages/admin/RewardsManager";
 import PromoManager from "@/pages/admin/PromoManager";
 import Analytics from "@/pages/admin/Analytics";
 import SystemConfig from "@/pages/admin/SystemConfig";
+import ScanMember from "@/pages/admin/ScanMember";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 
@@ -49,6 +50,7 @@ const AppRoutes = () => {
         <Route element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="members" element={<AdminDashboard />} />
+          <Route path="scan" element={<ScanMember />} />
           <Route path="verify" element={<VerifyVoucher />} />
           <Route path="rewards" element={<RewardsManager />} />
           <Route path="promos" element={<PromoManager />} />

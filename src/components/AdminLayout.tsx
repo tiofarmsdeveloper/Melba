@@ -8,7 +8,7 @@ import {
   Award, 
   PieChart,
   ChevronLeft,
-  ScanLine,
+  Scan,
   Ticket,
   Settings
 } from 'lucide-react';
@@ -25,7 +25,7 @@ const AdminLayout = () => {
   const navItems = [
     { label: 'Stats', icon: LayoutDashboard, path: '/admin' },
     { label: 'Members', icon: Users, path: '/admin/members' },
-    { label: 'Verify', icon: ScanLine, path: '/admin/verify' },
+    { label: 'Scan', icon: Scan, path: '/admin/scan' },
     { label: 'Rewards', icon: Award, path: '/admin/rewards' },
     { label: 'Config', icon: Settings, path: '/admin/config' },
   ];
