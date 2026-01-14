@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+// @ts-ignore
 import { Html5QrcodeScanner } from 'html5-qr-code';
 
 interface QRScannerProps {
@@ -7,9 +8,10 @@ interface QRScannerProps {
 }
 
 const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanError }) => {
-  const scannerRef = useRef<Html5QrcodeScanner | null>(null);
+  const scannerRef = useRef<any>(null);
 
   useEffect(() => {
+    // Initializing the scanner
     scannerRef.current = new Html5QrcodeScanner(
       "qr-reader",
       { fps: 10, qrbox: { width: 250, height: 250 } },
@@ -17,21 +19,21 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onScanError }) => 
     );
 
     scannerRef.current.render(
-      (decodedText) => {
+      (decodedText: string) => {
         onScanSuccess(decodedText);
         // We stop the scanner after a successful scan to prevent multiple triggers
         if (scannerRef.current) {
-          scannerRef.current.clear().catch(err => console.error("Failed to clear scanner", err));
+          scannerRef.current.clear().catch((err: any) => console.error("Failed to clear scanner", err));
         }
       },
-      (error) => {
+      (error: any) => {
         if (onScanError) onScanError(error);
       }
     );
 
     return () => {
       if (scannerRef.current) {
-        scannerRef.current.clear().catch(err => console.error("Failed to clear scanner on unmount", err));
+        scannerRef.current.clear().catch((err: any) => console.error("Failed to clear scanner on unmount", err));
       }
     };
   }, [onScanSuccess, onScanError]);
