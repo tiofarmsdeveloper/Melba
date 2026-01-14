@@ -14,6 +14,7 @@ import Profile from "@/pages/user/Profile";
 import Leaderboard from "@/pages/user/Leaderboard";
 import ReferFriend from "@/pages/user/ReferFriend";
 import Wallet from "@/pages/user/Wallet";
+import Inbox from "@/pages/user/Inbox";
 
 import AdminLayout from "./components/AdminLayout";
 import AdminDashboard from "@/pages/admin/Dashboard";
@@ -21,20 +22,17 @@ import VerifyVoucher from "@/pages/admin/VerifyVoucher";
 import RewardsManager from "@/pages/admin/RewardsManager";
 import PromoManager from "@/pages/admin/PromoManager";
 import Analytics from "@/pages/admin/Analytics";
+import SystemConfig from "@/pages/admin/SystemConfig";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
-import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const AppRoutes = () => {
   const { user } = useAuth();
-
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      
-      {/* User Routes */}
       <Route element={<UserProtectedRoute />}>
         <Route element={<UserLayout />}>
           <Route path="/" element={<UserDashboard />} />
@@ -44,10 +42,9 @@ const AppRoutes = () => {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/refer" element={<ReferFriend />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/inbox" element={<Inbox />} />
         </Route>
       </Route>
-
-      {/* Admin Routes */}
       <Route path="/admin" element={<AdminProtectedRoute />}>
         <Route element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
@@ -56,9 +53,9 @@ const AppRoutes = () => {
           <Route path="rewards" element={<RewardsManager />} />
           <Route path="promos" element={<PromoManager />} />
           <Route path="analytics" element={<Analytics />} />
+          <Route path="config" element={<SystemConfig />} />
         </Route>
       </Route>
-
       <Route path="*" element={user ? <Navigate to="/" /> : <Navigate to="/login" />} />
     </Routes>
   );
@@ -67,12 +64,9 @@ const AppRoutes = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
+      <Toaster /><Sonner />
       <BrowserRouter>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
+        <AuthProvider><AppRoutes /></AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

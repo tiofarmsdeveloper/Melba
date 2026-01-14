@@ -2,7 +2,7 @@ export interface Transaction {
   id: number;
   description: string;
   date: string;
-  amount: number; // positive for earned, negative for spent
+  amount: number;
 }
 
 export interface Voucher {
@@ -11,6 +11,15 @@ export interface Voucher {
   code: string;
   expiry: string;
   used: boolean;
+}
+
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  date: string;
+  read: boolean;
+  type: 'info' | 'reward' | 'tier';
 }
 
 export interface User {
@@ -26,6 +35,7 @@ export interface User {
   transactions: Transaction[];
   identifier: string;
   vouchers: Voucher[];
+  notifications: Notification[];
 }
 
 export let users: User[] = [
@@ -41,13 +51,14 @@ export let users: User[] = [
     avatar: 'https://api.dicebear.com/8.x/emoji/svg?seed=Alex',
     identifier: '210-843-775-807',
     vouchers: [],
+    notifications: [
+      { id: '1', title: 'Welcome to Privé', message: 'You have ascended to the Privé tier. Enjoy your new benefits.', date: '2024-07-20', read: false, type: 'tier' },
+      { id: '2', title: 'New Reward Available', message: 'The Artisanal Pizza Pairing is now available for redemption.', date: '2024-07-18', read: true, type: 'reward' }
+    ],
     transactions: [
       { id: 1, description: 'Dinner at Melba', date: '2024-07-20', amount: -150 },
       { id: 2, description: 'Promo Code: MELBA100', date: '2024-07-18', amount: 100 },
       { id: 3, description: 'Referral Bonus', date: '2024-07-15', amount: 50 },
-      { id: 4, description: 'Lunch Special', date: '2024-07-12', amount: -75 },
-      { id: 5, description: 'Welcome Credits', date: '2024-07-10', amount: 25 },
-      { id: 6, description: 'Late Night Pizza', date: '2024-07-05', amount: -90 },
     ],
   },
   {
@@ -62,33 +73,20 @@ export let users: User[] = [
     avatar: 'https://api.dicebear.com/8.x/emoji/svg?seed=Admin',
     identifier: '001-002-003-004',
     vouchers: [],
+    notifications: [],
     transactions: [],
-  },
-  {
-    id: 3,
-    username: 'member',
-    password: 'password',
-    role: 'user',
-    name: 'Sam Smith',
-    tier: 'Member',
-    credits: 200,
-    leaderboardUsername: 'Crust Crusader',
-    avatar: 'https://api.dicebear.com/8.x/emoji/svg?seed=Sam',
-    identifier: '332-912-445-819',
-    vouchers: [],
-    transactions: [
-      { id: 1, description: 'Welcome Credits', date: '2024-07-19', amount: 200 },
-    ],
   },
 ];
 
 export const tiers = {
   Member: {
     name: 'Member',
+    threshold: 0,
     benefits: ['Priority waitlist', 'Early access to public events'],
   },
   Privé: {
     name: 'Privé',
+    threshold: 1000,
     benefits: [
       'Priority reservations',
       'Complimentary welcome mocktail',
@@ -98,6 +96,7 @@ export const tiers = {
   },
   'Black Circle': {
     name: 'Black Circle',
+    threshold: 5000,
     benefits: [
       'Guaranteed reservations (even peak)',
       'Off-menu mocktails',
@@ -109,34 +108,9 @@ export const tiers = {
 };
 
 export const rewards = [
-  {
-    id: 1,
-    title: 'Artisanal Pizza Pairing',
-    description: 'A curated selection of our finest wood-fired pizzas.',
-    image: '/placeholder.svg',
-    cost: 500,
-  },
-  {
-    id: 2,
-    title: 'Ginger Ale Flight',
-    description: 'Explore a flight of house-made ginger ales.',
-    image: '/placeholder.svg',
-    cost: 250,
-  },
-  {
-    id: 3,
-    title: 'Signature Mocktail',
-    description: 'Enjoy a tableside preparation of a signature mocktail.',
-    image: '/placeholder.svg',
-    cost: 350,
-  },
-  {
-    id: 4,
-    title: 'Dessert Selection',
-    description: 'Your choice of any dessert from our daily menu.',
-    image: '/placeholder.svg',
-    cost: 400,
-  },
+  { id: 1, title: 'Artisanal Pizza Pairing', description: 'A curated selection of our finest wood-fired pizzas.', image: '/placeholder.svg', cost: 500 },
+  { id: 2, title: 'Ginger Ale Flight', description: 'Explore a flight of house-made ginger ales.', image: '/placeholder.svg', cost: 250 },
+  { id: 3, title: 'Signature Mocktail', description: 'Enjoy a tableside preparation of a signature mocktail.', image: '/placeholder.svg', cost: 350 },
 ];
 
 export const promoCodes = [

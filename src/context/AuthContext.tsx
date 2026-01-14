@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { users as initialUsers, User, Voucher } from '@/data/mockData';
+import { users as initialUsers, User, Voucher, Notification } from '@/data/mockData';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
@@ -12,6 +12,8 @@ interface AuthContextType {
   redeemReward: (cost: number, description: string) => boolean;
   updateUsername: (newNickname: string) => void;
   useVoucher: (voucherId: string) => void;
+  markNotificationRead: (id: string) => void;
+  sendNotification: (userId: number, notification: Omit<Notification, 'id' | 'read' | 'date'>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,65 +24,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   const login = (username: string, password: string): boolean => {
-    const foundUser = users.find(
-      (u) => u.username === username && u.password === password
-    );
+    const foundUser = users.find((u) => u.username === username && u.password === password);
     if (foundUser) {
-      const { password: _, ...userToStore } = foundUser;
-      setUser(userToStore as User);
-      if (foundUser.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/');
-      }
+      setUser(foundUser as User);
+      if (foundUser.role === 'admin') navigate('/admin');
+      else navigate('/');
       return true;
     }
     return false;
   };
 
-  const logout = () => {
-    setUser(null);
-    navigate('/login');
-  };
+  const logout = () => { setUser(null); navigate('/login'); };
 
   const addCredits = (amount: number) => {
     if (user) {
-      const newTransaction = {
-        id: Math.random(),
-        description: amount > 0 ? 'Credits Added' : 'Credits Removed',
-        date: new Date().toISOString().split('T')[0],
-        amount: amount
-      };
-
-      const updatedUser = { 
-        ...user, 
-        credits: user.credits + amount,
-        transactions: [newTransaction, ...(user.transactions || [])]
-      };
-      
+      const newTransaction = { id: Math.random(), description: amount > 0 ? 'Credits Added' : 'Credits Removed', date: new Date().toISOString().split('T')[0], amount };
+      const updatedUser = { ...user, credits: user.credits + amount, transactions: [newTransaction, ...(user.transactions || [])] };
       setUser(updatedUser);
-      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+      setUsers(prev => prev.map(u => u.id === user.id ? updatedUser : u));
     }
   };
 
   const adminAddCredits = (userId: number, amount: number, reason: string) => {
-    setUsers(prevUsers => prevUsers.map(u => {
+    setUsers(prev => prev.map(u => {
       if (u.id === userId) {
-        const newTransaction = {
-          id: Math.random(),
-          description: reason,
-          date: new Date().toISOString().split('T')[0],
-          amount: amount
-        };
-        const updated = {
-          ...u,
-          credits: u.credits + amount,
-          transactions: [newTransaction, ...(u.transactions || [])]
-        };
-        // If the current logged in user is the one being updated, update the session user too
-        if (user?.id === userId) {
-          setUser(updated);
-        }
+        const updated = { ...u, credits: u.credits + amount, transactions: [{ id: Math.random(), description: reason, date: new Date().toISOString().split('T')[0], amount }, ...(u.transactions || [])] };
+        if (user?.id === userId) setUser(updated);
         return updated;
       }
       return u;
@@ -90,30 +59,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const redeemReward = (cost: number, description: string): boolean => {
     if (user && user.credits >= cost) {
       const voucherId = Math.random().toString(36).substr(2, 9).toUpperCase();
-      const newVoucher: Voucher = {
-        id: voucherId,
-        title: description,
-        code: `MB-${voucherId}`,
-        expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        used: false
-      };
-
-      const newTransaction = {
-        id: Math.random(),
-        description: `Redeemed: ${description}`,
-        date: new Date().toISOString().split('T')[0],
-        amount: -cost
-      };
-
-      const updatedUser = { 
-        ...user, 
-        credits: user.credits - cost,
-        transactions: [newTransaction, ...(user.transactions || [])],
-        vouchers: [newVoucher, ...(user.vouchers || [])]
-      };
-      
+      const newVoucher: Voucher = { id: voucherId, title: description, code: `MB-${voucherId}`, expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], used: false };
+      const updatedUser = { ...user, credits: user.credits - cost, transactions: [{ id: Math.random(), description: `Redeemed: ${description}`, date: new Date().toISOString().split('T')[0], amount: -cost }, ...(user.transactions || [])], vouchers: [newVoucher, ...(user.vouchers || [])] };
       setUser(updatedUser);
-      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+      setUsers(prev => prev.map(u => u.id === user.id ? updatedUser : u));
       return true;
     }
     return false;
@@ -123,23 +72,40 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (user) {
       const updatedUser = { ...user, leaderboardUsername: newNickname };
       setUser(updatedUser);
-      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+      setUsers(prev => prev.map(u => u.id === user.id ? updatedUser : u));
     }
   };
 
   const useVoucher = (voucherId: string) => {
     if (user) {
-      const updatedUser = {
-        ...user,
-        vouchers: user.vouchers.map(v => v.id === voucherId ? { ...v, used: true } : v)
-      };
+      const updatedUser = { ...user, vouchers: user.vouchers.map(v => v.id === voucherId ? { ...v, used: true } : v) };
       setUser(updatedUser);
-      setUsers(prevUsers => prevUsers.map(u => u.id === user.id ? updatedUser : u));
+      setUsers(prev => prev.map(u => u.id === user.id ? updatedUser : u));
     }
   };
 
+  const markNotificationRead = (id: string) => {
+    if (user) {
+      const updatedUser = { ...user, notifications: user.notifications.map(n => n.id === id ? { ...n, read: true } : n) };
+      setUser(updatedUser);
+      setUsers(prev => prev.map(u => u.id === user.id ? updatedUser : u));
+    }
+  };
+
+  const sendNotification = (userId: number, notification: Omit<Notification, 'id' | 'read' | 'date'>) => {
+    setUsers(prev => prev.map(u => {
+      if (u.id === userId) {
+        const newNotif = { ...notification, id: Math.random().toString(), date: new Date().toISOString().split('T')[0], read: false };
+        const updated = { ...u, notifications: [newNotif, ...(u.notifications || [])] };
+        if (user?.id === userId) setUser(updated);
+        return updated;
+      }
+      return u;
+    }));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, users, login, logout, addCredits, adminAddCredits, redeemReward, updateUsername, useVoucher }}>
+    <AuthContext.Provider value={{ user, users, login, logout, addCredits, adminAddCredits, redeemReward, updateUsername, useVoucher, markNotificationRead, sendNotification }}>
       {children}
     </AuthContext.Provider>
   );
@@ -147,8 +113,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (context === undefined) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
