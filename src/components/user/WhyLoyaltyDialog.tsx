@@ -11,7 +11,6 @@ import {
   TrendingUp, 
   BarChart3, 
   ArrowUpRight,
-  Target,
   RefreshCcw,
   ZapOff,
   Download,
@@ -29,12 +28,34 @@ interface WhyLoyaltyDialogProps {
 const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
   const [platform, setPlatform] = useState<'ios' | 'android' | 'other'>('other');
   const [showInstructions, setShowInstructions] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase();
     if (/iphone|ipad|ipod/.test(ua)) setPlatform('ios');
     else if (/android/.test(ua)) setPlatform('android');
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
+
+  const handleDownloadClick = async () => {
+    if (platform === 'android' && deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+      }
+    } else {
+      // For iOS or if prompt isn't available, show instructions
+      setShowInstructions(true);
+    }
+  };
 
   const metrics = [
     { label: "Visit Frequency", value: "+42%", desc: "Increase in monthly visits from Black Circle members." },
@@ -81,7 +102,6 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           </DialogDescription>
         </DialogHeader>
 
-        {/* Key Metrics Grid */}
         <div className="grid grid-cols-3 gap-3 mb-8">
           {metrics.map((m, i) => (
             <div key={i} className="bg-brand-charcoal p-3 rounded-2xl shadow-neumorphic-in border border-brand-white/5">
@@ -94,7 +114,6 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           ))}
         </div>
 
-        {/* Lifecycle Model */}
         <div className="mb-8 p-6 bg-brand-charcoal/50 rounded-2xl shadow-neumorphic-in border border-brand-white/5">
           <h4 className="text-[10px] uppercase tracking-[0.2em] text-brand-silver font-bold mb-6">Member Lifecycle Efficiency</h4>
           <div className="h-32 w-full">
@@ -135,7 +154,6 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           ))}
         </div>
 
-        {/* Download Section */}
         <div className="mt-8 pt-6 border-t border-brand-white/5">
           <div className="bg-brand-charcoal p-6 rounded-3xl shadow-neumorphic-out border border-brand-white/5">
             <div className="flex items-center gap-4 mb-4">
@@ -185,11 +203,11 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
               </div>
             ) : (
               <Button 
-                onClick={() => setShowInstructions(true)}
+                onClick={handleDownloadClick}
                 className="w-full bg-brand-silver text-brand-charcoal font-bold py-6 rounded-2xl shadow-md hover:brightness-95 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
               >
                 <Download className="w-4 h-4" />
-                Download Melba App
+                {platform === 'android' && deferredPrompt ? 'Install Now' : 'Download Melba App'}
               </Button>
             )}
             
