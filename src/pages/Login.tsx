@@ -23,8 +23,8 @@ const Login = () => {
       {/* Information Trigger (Top Right) */}
       <div className="absolute top-6 right-6 z-50">
         <WhyLoyaltyDialog>
-          <button className="w-10 h-10 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out active:shadow-neumorphic-in transition-all duration-200">
-            <span className="text-brand-silver font-bold text-lg select-none">I</span>
+          <button className="w-10 h-10 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out active:shadow-neumorphic-in transition-all duration-200 group">
+            <span className="text-brand-silver font-serif font-bold text-xl select-none group-hover:text-brand-white transition-colors">I</span>
           </button>
         </WhyLoyaltyDialog>
       </div>
