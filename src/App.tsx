@@ -27,6 +27,7 @@ import SystemConfig from "@/pages/admin/SystemConfig";
 import ScanMember from "@/pages/admin/ScanMember";
 import UserProtectedRoute from "@/components/UserProtectedRoute";
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
+import InstallPrompt from "@/components/InstallPrompt";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +70,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster /><Sonner />
+      <InstallPrompt />
       <BrowserRouter>
         <AuthProvider><AppRoutes /></AuthProvider>
       </BrowserRouter>
