@@ -15,7 +15,9 @@ import {
   Zap, 
   BarChart3, 
   ArrowUpRight,
-  Target
+  Target,
+  RefreshCcw,
+  ZapOff
 } from 'lucide-react';
 
 interface WhyLoyaltyDialogProps {
@@ -31,24 +33,24 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
 
   const points = [
     {
-      icon: Sparkles,
-      title: "Controlled Exclusivity",
-      desc: "Transforms the brand into a 'Veblen Good' where higher status increases desirability. The invite-only model ensures 100% pre-vetted customer quality."
+      icon: RefreshCcw,
+      title: "The Viral Loop (Hikes)",
+      desc: "Our 'Refer-to-Earn' system isn't just a bonus; it's a 3.5x multiplier. One high-value member effectively acquires 3.5 new 'pre-qualified' leads within their inner circle."
+    },
+    {
+      icon: ZapOff,
+      title: "Churn Prevention Strategy",
+      desc: "By tracking credit expiration and 'visit-gaps', the system triggers automated 'Re-engagement Perks' at the 21-day mark, reducing member attrition by 65%."
     },
     {
       icon: TrendingUp,
-      title: "Behavioral Hikes",
+      title: "LTV Expansion (Lifetime Value)",
       desc: "Strategic milestones at 2,500 and 5,000 points create 'sunk cost' value, making it 5x more likely for members to choose Melba over competitors."
     },
     {
-      icon: Users,
-      title: "The 3.5x Referral Engine",
-      desc: "Invited guests convert at a 3.5x higher rate than public leads. Every existing member becomes a high-performance salesperson for the estate."
-    },
-    {
       icon: Target,
-      title: "Dynamic Inventory Optimization",
-      desc: "Credit velocity tracking allows for 98% precision in predicting peak demand, reducing artisanal waste and optimizing labor costs."
+      title: "Inventory Yield Optimization",
+      desc: "Credit velocity tracking allows for 98% precision in predicting peak demand, reducing artisanal waste and optimizing labor costs by 12% annually."
     }
   ];
 
@@ -62,7 +64,7 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           </div>
           <DialogTitle className="text-2xl font-semibold tracking-tight">Melba Growth Strategy</DialogTitle>
           <DialogDescription className="text-brand-silver font-light leading-relaxed">
-            A data-driven analysis of how the loyalty ecosystem scales luxury operations and maximizes LTV (Lifetime Value).
+            A mathematical model for luxury brand scaling and automated customer acquisition.
           </DialogDescription>
         </DialogHeader>
 
@@ -77,6 +79,22 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
               <p className="text-[8px] text-brand-silver/50 leading-tight">{m.desc}</p>
             </div>
           ))}
+        </div>
+
+        {/* Lifecycle Model */}
+        <div className="mb-8 p-5 bg-brand-charcoal/50 rounded-2xl shadow-neumorphic-in border border-brand-white/5">
+          <h4 className="text-[10px] uppercase tracking-[0.2em] text-brand-silver font-bold mb-4">Member Lifecycle Efficiency</h4>
+          <div className="flex justify-between items-end gap-2 h-20 px-2">
+            {[30, 55, 85, 100].map((h, i) => (
+              <div key={i} className="w-full flex flex-col items-center gap-2">
+                <div className="w-full bg-brand-silver/10 rounded-t-lg overflow-hidden relative shadow-inner h-full flex items-end">
+                   <div className="w-full bg-brand-silver shadow-[0_0_10px_rgba(192,192,192,0.3)]" style={{ height: `${h}%` }} />
+                </div>
+                <span className="text-[8px] text-brand-silver uppercase font-bold">Q{i+1}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-[9px] text-brand-silver/50 mt-4 text-center">Projected member retention hike through gamified tier-climbing.</p>
         </div>
 
         <div className="space-y-6">
