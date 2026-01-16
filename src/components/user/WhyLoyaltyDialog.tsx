@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -9,21 +9,33 @@ import {
 } from '@/components/ui/dialog';
 import { 
   TrendingUp, 
-  Users, 
-  Sparkles, 
   BarChart3, 
   ArrowUpRight,
   Target,
   RefreshCcw,
-  ZapOff
+  ZapOff,
+  Download,
+  Share,
+  PlusSquare,
+  Smartphone
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, ResponsiveContainer, Cell, Tooltip } from 'recharts';
+import { Button } from '@/components/ui/button';
 
 interface WhyLoyaltyDialogProps {
   children: React.ReactNode;
 }
 
 const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
+  const [platform, setPlatform] = useState<'ios' | 'android' | 'other'>('other');
+  const [showInstructions, setShowInstructions] = useState(false);
+
+  useEffect(() => {
+    const ua = window.navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua)) setPlatform('ios');
+    else if (/android/.test(ua)) setPlatform('android');
+  }, []);
+
   const metrics = [
     { label: "Visit Frequency", value: "+42%", desc: "Increase in monthly visits from Black Circle members." },
     { label: "Acquisition Cost", value: "-30%", desc: "Lower CAC via integrated peer-to-peer referrals." },
@@ -41,22 +53,17 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
     {
       icon: RefreshCcw,
       title: "The Viral Loop (Hikes)",
-      desc: "Our 'Refer-to-Earn' system isn't just a bonus; it's a 3.5x multiplier. One high-value member effectively acquires 3.5 new 'pre-qualified' leads within their inner circle."
+      desc: "Our 'Refer-to-Earn' system isn't just a bonus; it's a 3.5x multiplier. One high-value member effectively acquires 3.5 new 'pre-qualified' leads."
     },
     {
       icon: ZapOff,
       title: "Churn Prevention Strategy",
-      desc: "By tracking credit expiration and 'visit-gaps', the system triggers automated 'Re-engagement Perks' at the 21-day mark, reducing member attrition by 65%."
+      desc: "Automated 'Re-engagement Perks' at the 21-day mark, reducing member attrition by 65%."
     },
     {
       icon: TrendingUp,
-      title: "LTV Expansion (Lifetime Value)",
-      desc: "Strategic milestones at 2,500 and 5,000 points create 'sunk cost' value, making it 5x more likely for members to choose Melba over competitors."
-    },
-    {
-      icon: Target,
-      title: "Inventory Yield Optimization",
-      desc: "Credit velocity tracking allows for 98% precision in predicting peak demand, reducing artisanal waste and optimizing labor costs by 12% annually."
+      title: "LTV Expansion",
+      desc: "Strategic milestones at 2,500 and 5,000 points create 'sunk cost' value, locking in member loyalty."
     }
   ];
 
@@ -87,10 +94,9 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           ))}
         </div>
 
-        {/* Lifecycle Model - FIXED WITH RECHARTS */}
+        {/* Lifecycle Model */}
         <div className="mb-8 p-6 bg-brand-charcoal/50 rounded-2xl shadow-neumorphic-in border border-brand-white/5">
           <h4 className="text-[10px] uppercase tracking-[0.2em] text-brand-silver font-bold mb-6">Member Lifecycle Efficiency</h4>
-          
           <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={lifecycleData}>
@@ -113,16 +119,12 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          
-          <p className="text-[9px] text-brand-silver/50 mt-6 text-center italic">
-            Projected member retention hike through gamified tier-climbing.
-          </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 mb-8">
           {points.map((point, i) => (
             <div key={i} className="flex gap-4 group">
-              <div className="w-10 h-10 rounded-xl bg-brand-charcoal shadow-neumorphic-in flex items-center justify-center shrink-0 group-hover:shadow-neumorphic-out transition-all duration-300">
+              <div className="w-10 h-10 rounded-xl bg-brand-charcoal shadow-neumorphic-in flex items-center justify-center shrink-0">
                 <point.icon className="w-5 h-5 text-brand-silver" />
               </div>
               <div>
@@ -133,21 +135,70 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           ))}
         </div>
 
+        {/* Download Section */}
         <div className="mt-8 pt-6 border-t border-brand-white/5">
-          <div className="bg-brand-charcoal p-4 rounded-2xl shadow-neumorphic-out border border-brand-white/5">
-             <div className="flex justify-between items-center mb-2">
-                <span className="text-[10px] text-brand-silver uppercase tracking-widest font-bold">Projected Revenue Impact</span>
-                <span className="text-[10px] text-green-400 font-bold">YEAR 1</span>
-             </div>
-             <div className="h-2 w-full bg-brand-charcoal rounded-full shadow-neumorphic-in overflow-hidden p-[1px]">
-                <div className="h-full w-[78%] bg-brand-silver rounded-full shadow-[0_0_10px_rgba(192,192,192,0.5)]" />
-             </div>
-             <p className="text-[10px] text-brand-silver/50 mt-2 text-center">
-               Est. <span className="text-brand-white font-bold">+24% Net Growth</span> through member-driven network effects.
-             </p>
+          <div className="bg-brand-charcoal p-6 rounded-3xl shadow-neumorphic-out border border-brand-white/5">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-10 h-10 bg-brand-charcoal rounded-xl shadow-neumorphic-in flex items-center justify-center">
+                <Smartphone className="w-5 h-5 text-brand-white" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold">Native Experience</h4>
+                <p className="text-[10px] text-brand-silver font-light uppercase tracking-widest">Install Melba App</p>
+              </div>
+            </div>
+
+            {showInstructions ? (
+              <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                {platform === 'ios' ? (
+                  <div className="bg-brand-charcoal/50 rounded-2xl p-4 border border-brand-white/5">
+                    <p className="text-[10px] text-brand-silver text-center mb-4">TO INSTALL ON IPHONE:</p>
+                    <div className="flex justify-around items-center">
+                      <div className="flex flex-col items-center gap-1 text-center">
+                        <div className="w-8 h-8 rounded-lg bg-brand-charcoal shadow-neumorphic-in flex items-center justify-center">
+                          <Share className="w-4 h-4 text-blue-400" />
+                        </div>
+                        <span className="text-[8px] text-brand-silver uppercase leading-tight">1. Tap<br/>Share</span>
+                      </div>
+                      <div className="w-4 h-[1px] bg-brand-white/10" />
+                      <div className="flex flex-col items-center gap-1 text-center">
+                        <div className="w-8 h-8 rounded-lg bg-brand-charcoal shadow-neumorphic-in flex items-center justify-center">
+                          <PlusSquare className="w-4 h-4" />
+                        </div>
+                        <span className="text-[8px] text-brand-silver uppercase leading-tight">2. Add to<br/>Home Screen</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-brand-charcoal/50 rounded-2xl p-4 border border-brand-white/5 text-center">
+                    <p className="text-[10px] text-brand-silver uppercase mb-2">Android Installation</p>
+                    <p className="text-xs text-brand-white font-light">Tap the browser menu (⋮) and select <span className="font-bold">"Install App"</span> or "Add to Home Screen".</p>
+                  </div>
+                )}
+                <Button 
+                  onClick={() => setShowInstructions(false)}
+                  variant="ghost" 
+                  className="w-full text-[10px] text-brand-silver uppercase tracking-widest"
+                >
+                  Back
+                </Button>
+              </div>
+            ) : (
+              <Button 
+                onClick={() => setShowInstructions(true)}
+                className="w-full bg-brand-silver text-brand-charcoal font-bold py-6 rounded-2xl shadow-md hover:brightness-95 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Download Melba App
+              </Button>
+            )}
+            
+            <p className="text-[10px] text-brand-silver/30 mt-4 text-center italic">
+              *Requires a modern mobile browser. No App Store visit required.
+            </p>
           </div>
           
-          <p className="text-[10px] text-brand-silver/20 uppercase tracking-[0.4em] mt-6 text-center italic">Luxury • Scalability • Data</p>
+          <p className="text-[10px] text-brand-silver/20 uppercase tracking-[0.4em] mt-8 text-center italic">Luxury • Scalability • Data</p>
         </div>
       </DialogContent>
     </Dialog>
