@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { showError } from '@/utils/toast';
-import { Eye } from 'lucide-react';
 import WhyLoyaltyDialog from '@/components/user/WhyLoyaltyDialog';
 
 const Login = () => {
@@ -21,11 +20,11 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-brand-charcoal p-4 relative">
-      {/* Pitch View Eye Icon */}
+      {/* Information Trigger (Top Right) */}
       <div className="absolute top-6 right-6 z-50">
         <WhyLoyaltyDialog>
           <button className="w-10 h-10 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out active:shadow-neumorphic-in transition-all duration-200">
-            <Eye className="w-5 h-5 text-brand-silver" />
+            <span className="text-brand-silver font-bold text-lg select-none">I</span>
           </button>
         </WhyLoyaltyDialog>
       </div>
@@ -51,7 +50,7 @@ const Login = () => {
               placeholder="Enter your access ID"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
+              className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl h-12 shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
             />
           </div>
           <div className="space-y-2">
@@ -62,17 +61,17 @@ const Login = () => {
               placeholder="Enter your secure key"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
+              className="bg-brand-charcoal text-brand-white placeholder-brand-silver border-none rounded-xl h-12 shadow-neumorphic-in focus:outline-none focus:ring-2 focus:ring-brand-silver/50 transition-all duration-300"
             />
           </div>
           <Button
             type="submit"
-            className="w-full bg-brand-silver text-brand-charcoal font-bold py-3 rounded-xl shadow-md hover:brightness-95 active:brightness-90 transition-all duration-200"
+            className="w-full bg-brand-silver text-brand-charcoal font-bold py-6 rounded-xl shadow-md hover:brightness-95 active:brightness-90 transition-all duration-200"
           >
             ENTER THE LOUNGE
           </Button>
         </form>
-        <p className="text-center text-xs text-brand-silver/50 mt-8">By entering, you agree to the House Rules.</p>
+        <p className="text-center text-xs text-brand-silver/50 mt-8 font-light">By entering, you agree to the House Rules.</p>
       </div>
     </div>
   );
