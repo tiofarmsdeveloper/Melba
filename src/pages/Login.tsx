@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { showError } from '@/utils/toast';
+import { Eye } from 'lucide-react';
+import WhyLoyaltyDialog from '@/components/user/WhyLoyaltyDialog';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -18,7 +20,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-brand-charcoal p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-brand-charcoal p-4 relative">
+      {/* Pitch View Eye Icon */}
+      <div className="absolute top-6 right-6 z-50">
+        <WhyLoyaltyDialog>
+          <button className="w-10 h-10 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out active:shadow-neumorphic-in transition-all duration-200">
+            <Eye className="w-5 h-5 text-brand-silver" />
+          </button>
+        </WhyLoyaltyDialog>
+      </div>
+
       <div className="w-full max-w-sm bg-brand-charcoal rounded-2xl p-8 shadow-neumorphic-out">
         <div className="flex justify-center mb-6">
           <div className="w-10 h-10 bg-brand-charcoal rounded-full flex items-center justify-center shadow-neumorphic-out">
