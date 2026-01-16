@@ -11,14 +11,13 @@ import {
   TrendingUp, 
   Users, 
   Sparkles, 
-  ShieldCheck, 
-  Zap, 
   BarChart3, 
   ArrowUpRight,
   Target,
   RefreshCcw,
   ZapOff
 } from 'lucide-react';
+import { BarChart, Bar, XAxis, ResponsiveContainer, Cell, Tooltip } from 'recharts';
 
 interface WhyLoyaltyDialogProps {
   children: React.ReactNode;
@@ -29,6 +28,13 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
     { label: "Visit Frequency", value: "+42%", desc: "Increase in monthly visits from Black Circle members." },
     { label: "Acquisition Cost", value: "-30%", desc: "Lower CAC via integrated peer-to-peer referrals." },
     { label: "Avg. Spend", value: "+18%", desc: "Higher AOV triggered by tier-climbing psychology." }
+  ];
+
+  const lifecycleData = [
+    { name: 'Q1', value: 30 },
+    { name: 'Q2', value: 55 },
+    { name: 'Q3', value: 85 },
+    { name: 'Q4', value: 100 },
   ];
 
   const points = [
@@ -81,20 +87,36 @@ const WhyLoyaltyDialog: React.FC<WhyLoyaltyDialogProps> = ({ children }) => {
           ))}
         </div>
 
-        {/* Lifecycle Model */}
-        <div className="mb-8 p-5 bg-brand-charcoal/50 rounded-2xl shadow-neumorphic-in border border-brand-white/5">
-          <h4 className="text-[10px] uppercase tracking-[0.2em] text-brand-silver font-bold mb-4">Member Lifecycle Efficiency</h4>
-          <div className="flex justify-between items-end gap-2 h-20 px-2">
-            {[30, 55, 85, 100].map((h, i) => (
-              <div key={i} className="w-full flex flex-col items-center gap-2">
-                <div className="w-full bg-brand-silver/10 rounded-t-lg overflow-hidden relative shadow-inner h-full flex items-end">
-                   <div className="w-full bg-brand-silver shadow-[0_0_10px_rgba(192,192,192,0.3)]" style={{ height: `${h}%` }} />
-                </div>
-                <span className="text-[8px] text-brand-silver uppercase font-bold">Q{i+1}</span>
-              </div>
-            ))}
+        {/* Lifecycle Model - FIXED WITH RECHARTS */}
+        <div className="mb-8 p-6 bg-brand-charcoal/50 rounded-2xl shadow-neumorphic-in border border-brand-white/5">
+          <h4 className="text-[10px] uppercase tracking-[0.2em] text-brand-silver font-bold mb-6">Member Lifecycle Efficiency</h4>
+          
+          <div className="h-32 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={lifecycleData}>
+                <XAxis 
+                  dataKey="name" 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{fill: '#c0c0c0', fontSize: 10, fontWeight: 'bold'}}
+                  dy={10}
+                />
+                <Tooltip 
+                  cursor={{fill: 'rgba(255,255,255,0.05)'}}
+                  contentStyle={{backgroundColor: '#232323', border: '1px solid rgba(192,192,192,0.1)', borderRadius: '8px'}}
+                />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]} barSize={40}>
+                  {lifecycleData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={index === 3 ? '#ffffff' : '#c0c0c0'} fillOpacity={0.2 + (index * 0.25)} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
-          <p className="text-[9px] text-brand-silver/50 mt-4 text-center">Projected member retention hike through gamified tier-climbing.</p>
+          
+          <p className="text-[9px] text-brand-silver/50 mt-6 text-center italic">
+            Projected member retention hike through gamified tier-climbing.
+          </p>
         </div>
 
         <div className="space-y-6">
